@@ -1,6 +1,8 @@
 package com.lambdaschool.bookstore.service;
 
 import com.lambdaschool.bookstore.exception.ResourceNotFoundException;
+import com.lambdaschool.bookstore.model.AuthorBooks;
+import com.lambdaschool.bookstore.model.Authors;
 import com.lambdaschool.bookstore.model.Book;
 import com.lambdaschool.bookstore.repository.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +26,33 @@ public class BookServiceImpl implements BookService
 	}
 
 	@Override
-	public void save(Book book)
+	public Book save(Book book)
 	{
-
+		return null;
 	}
 
 	@Override
-	public void update(Book book, long id) throws ResourceNotFoundException
+	public Book update(Book book, long id) throws ResourceNotFoundException
 	{
+		Book currentBook = findByBookId(id);
 
+		if (book.getBooktitle() != null)
+		{
+			currentBook.setBooktitle(book.getBooktitle());
+		}
+
+		if (book.getISBN() != null)
+		{
+			currentBook.setISBN(book.getISBN());
+		}
+
+		//compares value of users book body's copy year and changes it if it does not match current books copy year
+		if (book.getCopyyear() != currentBook.getCopyyear())
+		{
+			currentBook.setCopyYear(book.getCopyyear());
+		}
+
+		return booksRepository.save(currentBook);
 	}
 
 	@Override
@@ -46,6 +66,7 @@ public class BookServiceImpl implements BookService
 	@Override
 	public Book findByBookId(long id) throws ResourceNotFoundException
 	{
-		return null;
+		return booksRepository.findById(id).
+				orElseThrow(() -> new ResourceNotFoundException("Could not find book with" + " id " + id + " id"));
 	}
 }
