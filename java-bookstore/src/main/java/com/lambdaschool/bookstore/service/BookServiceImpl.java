@@ -40,12 +40,9 @@ public class BookServiceImpl implements BookService
 	@Override
 	public void assignBookToAuthor(long bookid, long authorid) throws ResourceNotFoundException
 	{
-		if(findByBookId(bookid) == null)
+		if(findByBookId(bookid) == null || authorService.findAuthorById(authorid) == null)
 		{
-			throw new ResourceNotFoundException("Book not found");
-		} else if (authorService.findAuthorById(authorid) == null)
-		{
-			throw new ResourceNotFoundException("Author not found");
+			return;
 		}
 
 		booksRepository.addBookToAuthor(bookid, authorid);
@@ -88,6 +85,6 @@ public class BookServiceImpl implements BookService
 	public Book findByBookId(long id) throws ResourceNotFoundException
 	{
 		return booksRepository.findById(id).
-				orElseThrow(() -> new ResourceNotFoundException("Could not find book with" + " id " + id + " id"));
+				orElseThrow(() -> new ResourceNotFoundException("Could not find book with an id of " + id));
 	}
 }

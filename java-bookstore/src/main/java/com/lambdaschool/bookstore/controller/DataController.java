@@ -26,7 +26,7 @@ public class DataController
 	//TODO how would I do this through a JSON body?
 	@PostMapping(value = "/addbooktoauthor/{bookid}/{authorid}", consumes = "application/json", produces =
 			"application/json")
-	public ResponseEntity<?> addBookToAuthor(@PathVariable long bookid, @PathVariable long authorid) throws ResourceNotFoundException
+	public ResponseEntity<?> addBookToAuthor(@PathVariable long bookid, @PathVariable long authorid)
 	{
 		bookService.assignBookToAuthor(bookid, authorid);
 		return new ResponseEntity<>(HttpStatus.OK);
