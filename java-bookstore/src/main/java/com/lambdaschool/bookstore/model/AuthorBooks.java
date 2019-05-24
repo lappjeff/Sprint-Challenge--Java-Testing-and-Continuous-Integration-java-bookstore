@@ -22,6 +22,8 @@ public class AuthorBooks extends Auditable implements Serializable
 	@JoinColumn(name = "bookid")
 	private Book book;
 
+//	private String authorname;
+
 	public AuthorBooks()
 	{
 	}
@@ -30,6 +32,8 @@ public class AuthorBooks extends Auditable implements Serializable
 	{
 		this.author = author;
 		this.book = book;
+		//todo Why is this returning null?
+//		this.authorname = author.getFirstname() + author.getLastname();
 	}
 
 	public Authors getAuthor()
@@ -52,6 +56,17 @@ public class AuthorBooks extends Auditable implements Serializable
 		this.book = book;
 	}
 
+//	public String getAuthorname()
+//	{
+//		return authorname;
+//	}
+//
+//	public void setAuthorname(String authorname)
+//	{
+//		this.authorname = authorname;
+//	}
+
+
 	@Override
 	public boolean equals(Object o)
 	{
@@ -64,7 +79,7 @@ public class AuthorBooks extends Auditable implements Serializable
 			return false;
 		}
 		AuthorBooks that = (AuthorBooks) o;
-		return getAuthor().equals(that.getAuthor()) && getBook().equals(that.getBook());
+		return Objects.equals(getAuthor(), that.getAuthor()) && Objects.equals(getBook(), that.getBook());
 	}
 
 	@Override

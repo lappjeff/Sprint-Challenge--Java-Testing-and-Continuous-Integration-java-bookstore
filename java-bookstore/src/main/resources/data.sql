@@ -1,3 +1,9 @@
+DELETE
+FROM author;
+DELETE
+FROM book;
+DELETE
+FROM authorbooks;
 
 INSERT INTO author (authorid, firstname, lastname) VALUES (1, 'John', 'Mitchell');
 INSERT INTO author (authorid, firstname, lastname) VALUES (2, 'Dan', 'Brown');
@@ -12,4 +18,8 @@ INSERT INTO book (bookid, booktitle, ISBN, copyyear) VALUES (3, 'The Da Vinci Co
 INSERT INTO book (bookid, booktitle, ISBN, copyyear) VALUES (4, 'Essentials of Finance', '1314241651234', 1998);
 INSERT INTO book (bookid, booktitle, ISBN, copyyear) VALUES (5, 'Calling Texas Home', '1885171382134', 2000);
 
-alter sequence hibernate_sequence restart with 25;
+INSERT INTO authorbooks (bookid, authorid) VALUES (1, 1);
+INSERT INTO authorbooks (bookid, authorid) VALUES (1, 2);
+INSERT INTO authorbooks (bookid, authorid) VALUES (2, 2);
+
+-- alter sequence hibernate_sequence restart with 25;
