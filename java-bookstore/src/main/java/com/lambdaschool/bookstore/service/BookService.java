@@ -12,6 +12,8 @@ public interface BookService
 {
 	void delete(long id);
 
+	void assignBookToAuthor(long bookid, long authorid);
+
 	Book save(Book book);
 
 	Book update(Book book, long id);
@@ -19,5 +21,7 @@ public interface BookService
 	List<Book> findAll(Pageable pageable);
 
 	Book findByBookId(long id);
+
+
 }
 

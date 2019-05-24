@@ -8,16 +8,21 @@ import com.lambdaschool.bookstore.repository.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 public class BookServiceImpl implements BookService
 {
 
 	@Autowired
 	private BooksRepository booksRepository;
+
+	@Autowired
+	private AuthorService authorService;
 
 	@Override
 	public void delete(long id) throws ResourceNotFoundException
@@ -31,6 +36,22 @@ public class BookServiceImpl implements BookService
 		return null;
 	}
 
+	@Transactional
+	@Override
+	public void assignBookToAuthor(long bookid, long authorid) throws ResourceNotFoundException
+	{
+		if(findByBookId(bookid) == null)
+		{
+			throw new ResourceNotFoundException("Book not found");
+		} else if (authorService.findAuthorById(authorid) == null)
+		{
+			throw new ResourceNotFoundException("Author not found");
+		}
+
+		booksRepository.addBookToAuthor(bookid, authorid);
+	}
+
+	@Transactional
 	@Override
 	public Book update(Book book, long id) throws ResourceNotFoundException
 	{

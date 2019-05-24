@@ -13,5 +13,7 @@ public interface AuthorService
 
 	void update(Authors author, long id);
 
+	Authors findAuthorById(long id);
+
 	List<Authors> findAll(Pageable pageable);
 }
