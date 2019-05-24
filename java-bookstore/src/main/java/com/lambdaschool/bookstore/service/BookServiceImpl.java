@@ -24,10 +24,19 @@ public class BookServiceImpl implements BookService
 	@Autowired
 	private AuthorService authorService;
 
+	@Transactional
 	@Override
 	public void delete(long id) throws ResourceNotFoundException
 	{
+		Book foundBook = findByBookId(id);
 
+		if (foundBook == null)
+		{
+			throw new ResourceNotFoundException("Could not delete book with id " + id + " because book does not exist");
+		}
+
+		booksRepository.deleteBookFromAuthorBooks(id);
+		booksRepository.delete(foundBook);
 	}
 
 	@Override

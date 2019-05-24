@@ -12,4 +12,13 @@ public interface BooksRepository extends PagingAndSortingRepository<Book, Long>
 	@Modifying
 	@Query(value = "INSERT INTO authorbooks(bookid, authorid) VALUES (:bookid, :authorid)", nativeQuery = true)
 	void addBookToAuthor(long bookid, long authorid);
+
+	@Transactional
+	@Modifying
+	@Query(value = "DELETE FROM authorbooks WHERE bookid = :bookid", nativeQuery = true)
+	void deleteBookFromAuthorBooks(long bookid);
+
+//	@Transactional
+//	@Modifying
+//	@Query(value = "DELETE FROM book WHERE book")
 }
